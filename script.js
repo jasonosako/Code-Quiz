@@ -1,9 +1,9 @@
 // Initial values
-let counter = 30;
-let currentQuestion = 0;
-let score = 0;
-let lost = 0;
-let timer;
+var counter = 45;
+var currentQuestion = 0;
+var score = 0;
+var lost = 0;
+var timer;
 
 // If the timer is over, then go to the next question
 function nextQuestion() {
@@ -44,8 +44,8 @@ function loadQuestion() {
     counter = 30;
     timer = setInterval(countDown, 1000);
 
-    const question = quizQuestions[currentQuestion].question; // 
-    const choices = quizQuestions[currentQuestion].choices; // 
+    var question = quizQuestions[currentQuestion].question; // 
+    var choices = quizQuestions[currentQuestion].choices; // 
 
     $('#time').html('Timer: ' + counter);
     $('#game').html(`
@@ -56,7 +56,7 @@ function loadQuestion() {
 }
 
 function loadChoices(choices) {
-    let result = '';
+    var result = '';
 
     for (let i = 0; i < choices.length; i++) {
         result += `<p class="choice" data-answer="${choices[i]}">${choices[i]}</p>`;
@@ -69,8 +69,8 @@ function loadChoices(choices) {
 // Event Delegation
 $(document).on('click', '.choice', function() {
     clearInterval(timer);
-    const selectedAnswer = $(this).attr('data-answer');
-    const correctAnswer = quizQuestions[currentQuestion].correctAnswer;
+    var selectedAnswer = $(this).attr('data-answer');
+    var correctAnswer = quizQuestions[currentQuestion].correctAnswer;
 
     if (correctAnswer === selectedAnswer) {
         score++;
@@ -110,23 +110,23 @@ $(document).on('click', '#reset', function() {
 
 
 function loadRemainingQuestion() {
-    const remainingQuestion = quizQuestions.length - (currentQuestion + 1);
-    const totalQuestion = quizQuestions.length;
+    var remainingQuestion = quizQuestions.length - (currentQuestion + 1);
+    var totalQuestion = quizQuestions.length;
 
     return `Remaining Question: ${remainingQuestion}/${totalQuestion}`;
 }
 
 
 function randomImage(images) {
-    const random = Math.floor(Math.random() * images.length);
-    const randomImage = images[random];
+    var random = Math.floor(Math.random() * images.length);
+    var randomImage = images[random];
     return randomImage;
 }
 
 
 // Display a funny giphy for correct and wrong answers
 function preloadImage(status) {
-    const correctAnswer = quizQuestions[currentQuestion].correctAnswer;
+    var correctAnswer = quizQuestions[currentQuestion].correctAnswer;
 
     if (status === 'win') {
         $('#game').html(`
