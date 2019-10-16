@@ -1,4 +1,4 @@
-var questions = [
+var quizQuestions = [
     {
         title: "Inside which HTML element do put the Javascript?",
         choices: ["<iscipt>", "<script>", "<javascript>", "<js>"],
