@@ -19,7 +19,7 @@ function nextQuestion() {
     
 }
 
-// Start a 30 seconds timer for user to respond or choose an answer to each question
+// Start a 45 seconds timer for user to respond or choose an answer to each question
 function timeUp() {
     clearInterval(timer);
 
