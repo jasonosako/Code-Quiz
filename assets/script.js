@@ -7,7 +7,7 @@ var timer;
 
 // If the timer is over, then go to the next question
 function nextQuestion() {
-    const isQuestionOver = (quizQuestions.length - 1) === currentQuestion;
+    var isQuestionOver = (quizQuestions.length - 1) === currentQuestion;
     if (isQuestionOver) {
         // TODO
         console.log('Game is over!!!!!');
@@ -26,7 +26,7 @@ function timeUp() {
     lost++;
 
     preloadImage('lost');
-    setTimeout(nextQuestion, 3 * 1000);
+    setTimeout(nextQuestion, 4.5 * 1000);
 }
 
 function countDown() {
@@ -41,7 +41,7 @@ function countDown() {
 
 // Display the question and the choices to the browser
 function loadQuestion() {
-    counter = 30;
+    counter = 45;
     timer = setInterval(countDown, 1000);
 
     var question = quizQuestions[currentQuestion].question; // 
@@ -87,7 +87,7 @@ $(document).on('click', '.choice', function() {
 
 
 function displayResult() {
-    const result = `
+    var result = `
         <p>You get ${score} questions(s) right</p>
         <p>You missed ${lost} questions(s)</p>
         <p>Total questions ${quizQuestions.length} questions(s) right</p>
