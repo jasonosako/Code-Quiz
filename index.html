@@ -20,22 +20,32 @@
     <header>
      <h1><strong>CODING  QUIZ</strong></h1>
         <div class="container">
-        <div class="jumbotron">
-            
+        <div class="wrapper">
             <p>
             Test your Javascript knowledge!
             </p>
             <button class="btn btn-secondary btn-lg" id="start">Start Quiz</button>
-            </div>
+        </div>
           
-            <h2 id="time"></h2>
-            <div id="game"></div>
-          
-            </div>
-          
-    <div class="scores"><a href="scores.html">View scores</a></div>
+        <div id="questions" class="hide">
+            <h2 id="questions-title"></h2>
+            <div id="choices" class="choices"></div>
+        
+        </div>
 
-    <div class="timer">Time Remaining: <span id="time">0</span></div> 
+        <div id="quizComplete" class="hide">
+            <h1>QUIZ COMPLETE!</h1>
+            <p>SCORE: <span id="final-score"></span>.</p>
+            <p>
+                ENTER NAME: <input type="text" id="testTaker" />
+                <button id="submit">SUBMIT</button>
+            </p>
+        </div>
+
+          
+    <div class="scores"><a href="scores.html">VIEW scores</a></div>
+
+    <div class="timer">TIME REMAINING: <span id="time">0</span></div> 
 
 <script src="./assets/questions.js"></script>
 <script src="./assets/script.js"></script>

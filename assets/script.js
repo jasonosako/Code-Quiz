@@ -1,16 +1,23 @@
-// Initial values
-var counter = 45;
+// Initial values // variables to keep track of quiz state
+var time = questions.length *15;
 var currentQuestion = 0;
-var score = 0;
-var lost = 0;
 var timer;
+
+var questions = document.getElementById("questions");
+var timer = document.getElementById("time");
+var answers = document.getElementById("answers");
+var startButton = document.getElementById("start");
+var submitButton = document.getElementById("submit");
+var testTaker = document.getElementById("testTaker");
+
+// hide the start screen
 
 // If the timer is over, then go to the next question
 function nextQuestion() {
     var isQuestionOver = (quizQuestions.length - 1) === currentQuestion;
     if (isQuestionOver) {
         // TODO
-        console.log('Game is over!!!!!');
+        console.log("Game Over");
         displayResult();
     } else {
         currentQuestion++;
@@ -23,10 +30,7 @@ function nextQuestion() {
 function timeUp() {
     clearInterval(timer);
 
-    lost++;
-
-    preloadImage('lost');
-    setTimeout(nextQuestion, 4.5 * 1000);
+    
 }
 
 function countDown() {
@@ -75,12 +79,12 @@ $(document).on('click', '.choice', function() {
     if (correctAnswer === selectedAnswer) {
         score++;
         console.log('Winsss!!!!');
-        preloadImage('win');
+        
         setTimeout(nextQuestion, 3 * 1000);
     } else {
         lost++;
         console.log('Lost!!!!');
-        preloadImage('lost');
+        
         setTimeout(nextQuestion, 3 * 1000);
     }
 });
@@ -117,31 +121,6 @@ function loadRemainingQuestion() {
 }
 
 
-function randomImage(images) {
-    var random = Math.floor(Math.random() * images.length);
-    var randomImage = images[random];
-    return randomImage;
-}
-
-
-// Display a funny giphy for correct and wrong answers
-function preloadImage(status) {
-    var correctAnswer = quizQuestions[currentQuestion].correctAnswer;
-
-    if (status === 'win') {
-        $('#game').html(`
-            <p class="preload-image">Congratulations, you pick the corrrect answer</p>
-            <p class="preload-image">The correct answer is <b>${correctAnswer}</b></p>
-            <img src="${randomImage(funImages)}" />
-        `);
-    } else {
-        $('#game').html(`
-            <p class="preload-image">The correct answer was <b>${correctAnswer}</b></p>
-            <p class="preload-image">You lost pretty bad</p>
-            <img src="${randomImage(sadImages)}" />
-        `);
-    }
-}
 
 $('#start').click(function() {
     $('#start').remove();
