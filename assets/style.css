@@ -7,6 +7,9 @@ body {
     margin-left: 100px;
 }
 
+.timer {
+    font-size: 25px;
+}
 .hide {
     display: none;
 }

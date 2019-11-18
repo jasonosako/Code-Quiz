@@ -2,7 +2,7 @@ var quizQuestions = [
     {
         title: "Inside which HTML element do put the Javascript?",
         choices: ["&#60iscipt&#62;", "&#60script&#62;", "&#60javascript&#62;", "&#60js&#62;"],
-        answer: "&#60script&#62;"
+        answer: "<script>"
     },
     {
         title: "What is the correct syntax to start a FOR loop?",

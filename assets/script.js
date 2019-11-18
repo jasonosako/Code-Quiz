@@ -37,19 +37,21 @@ function showQuestions() {
 }
 
 function clickAnswer(value) {
-
-    if(questionIndex == quizQuestions.length-1){
+    let realValue = value.path[0].innerText;
+    console.log(realValue);
+    if(questionIndex == quizQuestions.length-1) {
         quizComplete(time);
         return;
     }
-        if (value !== quizQuestions[questionIndex].answer) {
+    if (realValue !== quizQuestions[questionIndex].answer) {
+    
             time -= 10;
         if (time < 0) {
-            time = 0;
-            nextQuestion();    
-        }else{
-            nextQuestion();
+            time = 0;   
         }
+        nextQuestion(); 
+    }else{
+        nextQuestion();
     }
         timeRemaining.textContent = time;
 }
@@ -72,11 +74,12 @@ function quizComplete(theTime) {
 
     var scores = JSON.parse(window.localStorage.getItem("scores")) || [];
 
-    var lastScore = str.lastIndexOf("scores");
+    //var lastScore = str.lastIndexOf("scores");
 
     console.log($('.card-text'));
     console.log(scores);
-    $('.card-title')[0].textContent = JSON.stringify(lastScore);
+    $('.card-title')[0].textContent = time;
+    
 
 
         var newScore = {
@@ -84,8 +87,8 @@ function quizComplete(theTime) {
           };
       
           // save to localstorage
-          scores.push("Score:" + newScore.score);
-        window.localStorage.setItem("scores", JSON.stringify(lastScore));
+        scores.push(newScore);
+        window.localStorage.setItem("scores", JSON.stringify(scores));
     
 
     timeRemaining = null;
