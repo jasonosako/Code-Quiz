@@ -1,129 +1,106 @@
-// Initial values // variables to keep track of quiz state
-var time = questions.length *15;
-var currentQuestion = 0;
+var questionIndex = 0;
+var time = 60;
 var timer;
 
-var questions = document.getElementById("questions");
-var timer = document.getElementById("time");
-var answers = document.getElementById("answers");
-var startButton = document.getElementById("start");
-var submitButton = document.getElementById("submit");
-var testTaker = document.getElementById("testTaker");
+var timeRemaining = document.getElementById("time");
 
-// hide the start screen
+timeRemaining.textContent = time;
 
-// If the timer is over, then go to the next question
-function nextQuestion() {
-    var isQuestionOver = (quizQuestions.length - 1) === currentQuestion;
-    if (isQuestionOver) {
-        // TODO
-        console.log("Game Over");
-        displayResult();
-    } else {
-        currentQuestion++;
-        loadQuestion();
-    }
-    
+function startButton() {
+timer = setInterval(countDown, 1000);
+document.getElementsByClassName("starting-screen")[0].style.visibility = 'hidden';
+//$(".starting-screen").style.visibility = 'hidden';
+document.getElementById("questions").style.visibility = "visible";
+
+//$(".starting-screen").hide();
+//$("#questions").show();
+showQuestions();
 }
 
-// Start a 45 seconds timer for user to respond or choose an answer to each question
-function timeUp() {
-    clearInterval(timer);
+function showQuestions() {
+    document.getElementById("#questions")
+        $("#questions-title").text(quizQuestions[questionIndex].title);
+    document.getElementById("question-choices")
+        //$("#choices").text(quizQuestions[questionIndex].choices);
+    for(var i = 0; i < quizQuestions[questionIndex].choices.length; i++) {
+        var myChoices = document.createElement("button");
+        //myChoices.setAttribute("value", "");
+        myChoices.setAttribute("class", "btn btn-secondary");
+        //console.log(quizQuestions[questionIndex].choices[0]);
+        myChoices.innerHTML = quizQuestions[questionIndex].choices[i];
+        
+        document.getElementById("question-choices").addEventListener("click", clickAnswer);
+        //console.log(document.getElementById("choices"));
+        document.getElementById("question-choices").appendChild(myChoices);
+          
+    }
+}
 
-    
+function clickAnswer(value) {
+
+    if(questionIndex == quizQuestions.length-1){
+        quizComplete(time);
+        return;
+    }
+        if (value !== quizQuestions[questionIndex].answer) {
+            time -= 10;
+        if (time < 0) {
+            time = 0;
+            nextQuestion();    
+        }else{
+            nextQuestion();
+        }
+    }
+        timeRemaining.textContent = time;
 }
 
 function countDown() {
-    counter--;
-
-    $('#time').html('Timer: ' + counter);
-
-    if (counter === 0) {
-        timeUp();
-    }
-}
-
-// Display the question and the choices to the browser
-function loadQuestion() {
-    counter = 45;
-    timer = setInterval(countDown, 1000);
-
-    var question = quizQuestions[currentQuestion].question; // 
-    var choices = quizQuestions[currentQuestion].choices; // 
-
-    $('#time').html('Timer: ' + counter);
-    $('#game').html(`
-        <h4>${question}</h4>
-        ${loadChoices(choices)}
-        ${loadRemainingQuestion()}
-    `);
-}
-
-function loadChoices(choices) {
-    var result = '';
-
-    for (let i = 0; i < choices.length; i++) {
-        result += `<p class="choice" data-answer="${choices[i]}">${choices[i]}</p>`;
+    // update time
+    time--;
+    timeRemaining.textContent = time;
+  
+    // check if user ran out of time
+    if (time <= 0) {
+    quizComplete();
     }
 
-    return result;
 }
+function quizComplete(theTime) {
+   $('.card').show();
+   $("#questions-title").text("");
+   document.getElementById("question-choices").innerHTML = "";
 
-// Either correct/wrong choice selected, go to the next question
-// Event Delegation
-$(document).on('click', '.choice', function() {
-    clearInterval(timer);
-    var selectedAnswer = $(this).attr('data-answer');
-    var correctAnswer = quizQuestions[currentQuestion].correctAnswer;
+    var scores = JSON.parse(window.localStorage.getItem("scores")) || [];
 
-    if (correctAnswer === selectedAnswer) {
-        score++;
-        console.log('Winsss!!!!');
-        
-        setTimeout(nextQuestion, 3 * 1000);
-    } else {
-        lost++;
-        console.log('Lost!!!!');
-        
-        setTimeout(nextQuestion, 3 * 1000);
-    }
-});
+    var lastScore = str.lastIndexOf("scores");
+
+    console.log($('.card-text'));
+    console.log(scores);
+    $('.card-title')[0].textContent = JSON.stringify(lastScore);
 
 
-function displayResult() {
-    var result = `
-        <p>You get ${score} questions(s) right</p>
-        <p>You missed ${lost} questions(s)</p>
-        <p>Total questions ${quizQuestions.length} questions(s) right</p>
-        <button class="btn btn-primary" id="reset">Reset Game</button>
-    `;
+        var newScore = {
+            score: theTime,
+          };
+      
+          // save to localstorage
+          scores.push("Score:" + newScore.score);
+        window.localStorage.setItem("scores", JSON.stringify(lastScore));
+    
 
-    $('#game').html(result);
-}
-
-
-$(document).on('click', '#reset', function() {
-    counter = 30;
-    currentQuestion = 0;
-    score = 0;
-    lost = 0;
+    timeRemaining = null;
     timer = null;
+}
+function nextQuestion(){
+    $("#question-choices")[0].innerHTML = '';
+    questionIndex++;
+    showQuestions();
+}
 
-    loadQuestion();
-});
-
-
-function loadRemainingQuestion() {
-    var remainingQuestion = quizQuestions.length - (currentQuestion + 1);
-    var totalQuestion = quizQuestions.length;
-
-    return `Remaining Question: ${remainingQuestion}/${totalQuestion}`;
+function reload(){
+    window.reload;
 }
 
 
 
-$('#start').click(function() {
-    $('#start').remove();
-    $('#time').html(counter);
-    loadQuestion();
-});
+
